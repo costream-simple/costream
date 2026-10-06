@@ -1,0 +1,25 @@
+# Local environments and credentials
+.venv/
+.env
+.env.*
+
+# Python/build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Editor and agent state
+.vscode/
+.idea/
+.claude/
+.codex
+
+# Generated inference outputs
+*.mp4
+
+# Rollout and sensor arrays
+*.npz
+*.npy

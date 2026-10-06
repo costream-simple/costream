@@ -1,0 +1,5 @@
+include pyproject.toml MANIFEST.in README.md LICENSE NOTICE
+graft src/costream
+graft tests
+prune docs
+global-exclude __pycache__ *.py[cod] .DS_Store

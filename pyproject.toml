@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "costream"
+version = "0.2.0"
+description = "Composable predictive and reactive behaviors for robot manipulation (CPU reference)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+dependencies = ["numpy>=1.24,<3", "scipy>=1.10,<2"]
+
+[project.urls]
+Homepage = "https://costream-simple.github.io"
+Repository = "https://github.com/costream-simple/costream"
+Paper = "https://arxiv.org/abs/2606.26423"
+
+[project.optional-dependencies]
+test = ["pytest>=7,<9"]
+world-model = ["requests>=2.31,<3"]
+parity = ["opencv-python-headless>=4.5,<5"]
+
+[project.scripts]
+costream-demo = "costream.demo:main"
+costream-world-model = "costream.world_model:main"
+costream-extract = "costream.predictive.cli:main"
+costream-pipeline-demo = "costream.pipeline_demo:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["costream*"]
+
+[tool.setuptools.package-data]
+costream = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

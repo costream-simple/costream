@@ -1,0 +1,34 @@
+name: CoStream CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.9', '3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python }}'
+      - run: python -m pip install build
+      - run: python -m build
+      - name: Install source distribution and test from outside the checkout
+        shell: bash
+        run: |
+          python -m pip install dist/*.tar.gz 'pytest>=7,<9' 'requests>=2.31,<3'
+          python -m pip check
+          artifact_test_dir=$(mktemp -d)
+          tar -xzf dist/*.tar.gz -C "$artifact_test_dir"
+          cd "$artifact_test_dir"/costream-*
+          costream-demo
+          costream-pipeline-demo
+          python -m pytest tests -q
+      - uses: actions/upload-artifact@v4
+        with:
+          name: costream-${{ matrix.python }}
+          path: dist/*
